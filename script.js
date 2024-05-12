@@ -1,19 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
 
-<script>
     let humanScore = 0, computerScore = 0;
+    let humanChoice, computerChoice; 
 
-    function getHumanChoice(){
+    /*function getHumanChoice(){
         let userChoice = prompt("What do you pick?"); 
 
         if (/scissors/i.test(userChoice) || /rock/i.test(userChoice) || /paper/i.test(userChoice)) {
@@ -23,7 +12,33 @@
             alert("Please enter a VALID answer.")
             getHumanChoice();
         }
+    }*/
+
+    const rockButton = document.getElementById("rock");
+    const paperButton = document.getElementById("paper");
+    const scissorsButton = document.getElementById("scissors");
+    const results = document.getElementById("results");
+
+    const buttons = document.querySelectorAll("button");
+
+    buttons.forEach(function(button){
+        button.addEventListener("click", function(){
+            if (humanScore < 5 && computerScore < 5) {
+                humanChoice = button.textContent.toLowerCase();
+                playRound();
+            }
+        });
+    });
+
+    if (humanScore === 5) {
+        alert("Human wins!");
     }
+    else if (computerScore === 5) {
+        alert("Computer wins!");
+    }
+
+    //functions
+
     function getComputerChoice(){
 
         let randomNum = Math.random();
@@ -31,7 +46,7 @@
         if (randomNum < 1/3) {
             return "rock";
         }
-        else if (1/3 < randomNum < 2/3) {
+        else if (randomNum < 2/3 && randomNum > 1/3) {
             return "paper";
         }
         else {
@@ -39,7 +54,6 @@
         }
     }
     function playRound(){
-        humanChoice = getHumanChoice();
         computerChoice = getComputerChoice();
 
         if (humanChoice === computerChoice) {
@@ -75,13 +89,11 @@
                 computerScore++;
             }
         }
-    }
-    function playGame(){
-        for (let i = 0; i <= 0; i++) {
-            playRound();
-            console.log("Human: " + humanScore + "\nComputer: " + computerScore);
-        }
+        updateScoreboard();
     }
 
-    playGame();
-</script>
+    function updateScoreboard(){
+        results.textContent = "Human: " + humanScore + "\nComputer: " + computerScore;
+    }
+
+
